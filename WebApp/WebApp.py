@@ -1,3 +1,8 @@
+
+# IN CMD FIRST ENTER
+# set FLASK_APP=WebApp.py
+# NEXT ENTER 
+# flask run
 from flask import Flask, escape, request
 
 app = Flask(__name__)
