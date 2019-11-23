@@ -1,13 +1,22 @@
+from flask import Flask, jsonify, request, send_from_static
 
-# IN CMD FIRST ENTER
-# set FLASK_APP=WebApp.py
-# NEXT ENTER 
-# flask run
-from flask import Flask, escape, request
+from scipy.misc import imread, imresize
+
+import tensorflow as tf
+from keras.models import load_model
+
+import keras as kr
+import numpy as np
+import io
+import base64
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    name = request.args.get("name", "World")
-    return f'Hello, {escape(name)}!'
+global model, graph
+
+def Get_Model():
+    mod = load_model('../model/model.h5')
+    print('Model loaded')
+    return mod
+
+    
