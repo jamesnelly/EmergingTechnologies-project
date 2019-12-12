@@ -11,13 +11,13 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
-model = load_model('model/NewModel.h5')
-
 HEIGHT = 28
 WIDTH = 28
 SIZE = HEIGHT, WIDTH
 
 graph = tf.get_default_graph()
+
+
 
 @app.route('/')
 def homePage():
@@ -27,44 +27,43 @@ def homePage():
 @app.route('/predict', methods=['POST'])
 def predict():
 
-    global sess
-    global graph
-    with graph.as_default():
-        #set_session(sess)
 
-        encodeThatImage = request.values[('imgBase64')]
+    encodeThatImage = request.values[('imgBase64')]
 
-        decodeThatImage = base64.b64decode(encodeThatImage[22:])
+    decodeThatImage = base64.b64decode(encodeThatImage[22:])
 
-        with open('DrawnNum.png', 'wb') as f:
-            f.write(decodeThatImage)
+    with open('DrawnNum.png', 'wb') as f:
+        f.write(decodeThatImage)
 
-        predictedImage = Image.open("DrawnNum.png")
+    predictedImage = Image.open("DrawnNum.png")
 
 
-        #smooth's the image before resizing
-        SmoothIMG = predictedImage.filter(ImageFilter.SMOOTH_MORE)
-        # Returns a sized and cropped version of the image
-        NewImage = ImageOps.fit(SmoothIMG, SIZE)
+    #smooth's the image before resizing
+    SmoothIMG = predictedImage.filter(ImageFilter.SMOOTH_MORE)
+    # Returns a sized and cropped version of the image
+    NewImage = ImageOps.fit(SmoothIMG, SIZE)
 
-        NewImage.save("DrawnNumResized.png")
+    NewImage.save("DrawnNumResized.png")
 
-        cv2NewImage = cv2.imread("DrawnNumResized.png")
-        grayScaleNewImage = cv2.cvtColor(cv2NewImage, cv2.COLOR_BGR2GRAY)
-        grayScaleNewImageArray = np.array(grayScaleNewImage, dtype=np.float32).reshape(1, 784)
-        grayScaleNewImageArray /= 255
+    cv2NewImage = cv2.imread("DrawnNumResized.png")
+    grayScaleNewImage = cv2.cvtColor(cv2NewImage, cv2.COLOR_BGR2GRAY)
+    grayScaleNewImageArray = np.array(grayScaleNewImage, dtype=np.float32).reshape(1, 784)
+    grayScaleNewImageArray /= 255
 
-        
-        SetNewPrediction = model.predict(grayScaleNewImageArray)
-        GetNewPrediction = np.array(SetNewPrediction[0])
+    #Load model into memory
+    model = load_model('model/NewModel.h5')
+    
+    SetNewPrediction = model.predict(grayScaleNewImageArray)
+    GetNewPrediction = np.array(SetNewPrediction[0])
 
-        NewpredictedNumber = str(np.argmax(GetNewPrediction))
-        print(NewpredictedNumber)
+    NewpredictedNumber = str(np.argmax(GetNewPrediction))
 
-        return NewpredictedNumber
+    print("The nerual network predicted" + NewpredictedNumber)
 
-if __name__ == "main":
-    app.run(port=5000, debug=True)
+
+    return NewpredictedNumber
+
+    app.run()
     
 
    
