@@ -1,6 +1,23 @@
 4th Year Emerging Technologies Project consists of the well-know MNIST dataset as well as python packages like keras Flask and jupyter.The appliaction being developed is a model that will distinguish hand written digit's using the MNIST dataset and also a web Application that will let the user draw digit's using the mouse
 
 
+### Setting up Virtual Enviroment On windows Anaconda 
+* use CMDER when running commands
+
+* conda create --name venv
+* conada activate venv
+##### Install these packages listed.
+
+* conda install -c anaconda flask
+* conda install -c conda-forge tensorflow
+* conda install -c conda-forge keras
+* conda install -c anaconda pillow
+
+### Running flask on windows
+once you cloned the project
+* cd to the WebApp in the project
+* once you have activated the enviroment Run this (set FLASK_APP=server.py && flask run)
+
 
 ## MODEL Research
 
