@@ -1,47 +1,52 @@
 <!-- Adapted from https://www.codicode.com/art/how_to_draw_on_a_html5_canvas_with_a_mouse.aspx-->
 <html>
-    <div align="center">
-        <h1>Draw the number you would like to predict</h1>
-    </div>
-    <body onload="InitThis()">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> type = "text/javascript" ></script>
-            <script type="text/javascript" src="static/Draw.js"></script>
-                <div align="center">
-                    <canvas id="myCanvas" width="300" height="300" style="background: black"></canvas>
-                        <select id="selWidth">
-                        <option value="20" selected="selected">8</option>
-                            </select>
-                                 Color : <select id="selColor">
-                             <option value="white" selected="selected">white</option>
-                            </select>
-                         </div>
-                    <div align="center">
-                <div id="predictedNumber"> The perdiction result will display here</div>
-            <button onclick="clearArea();return false;">Clear Area</button>
-        <button onclick="predict()">predict</button>
-    </div>
-    <script>
-            function predict() {
-                //directed to take the image 
-                var canvas = document.getElementById("myCanvas");
-                var dataURL = canvas.toDataURL();
-                console.log(dataURL);
-
-                // Using Ajax post method for the image
-                $.ajax({
-                    type: 'POST',
-                    url: '/predict',
-                    data: {
-                        imgBase64: dataURL
-                    }
-                }).done(function (data) {
-                    // Logging to the console to confirm 
-                    console.log('SENT');
-                    // sending predicted number to the console
-                    console.log(data);
-                    $("#predictedNumber").empty().append(data);
-                });
-            };
-    </script>
-    </body>
-</html>
+   <head>
+      <link rel="stylesheet" type="text/css" href="static/Digit.css">
+   </head>
+   <div id="top text">
+      <h1>Draw the number you would like to predict</h1>
+   </div>
+   <body onload="InitThis()">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> type = "text/javascript" ></script>
+      <script type="text/javascript" src="static/Draw.js"></script>
+      <canvas id="myCanvas" width="400" height="400" style="background: black;"></canvas>
+      <br>
+      <div id="draw">
+         <select id="selWidth">
+            <option value="20" selected="selected">8</option>
+         </select>
+         <select id="selColor">
+            <option value="white" selected="selected">white</option>
+         </select>
+      </div>
+      <h2>
+         <div id="predictedNumber"> The perdiction result will display here</div>
+      </h2>
+      <div id="buttons">
+         <button id="clear" onclick="clearArea();return false;">Clear Area</button>
+         <button id="predict" onclick="predict()">predict</button>
+      </div>
+      <script>
+         function predict() {
+             var canvas = document.getElementById("myCanvas");
+             var dataURL = canvas.toDataURL();
+             console.log(dataURL);
+         
+             // Ajax post method for the image
+             $.ajax({
+                 type: 'POST',
+                 url: '/predict',
+                 data: {
+                     imgBase64: dataURL
+                 }
+             }).done(function (data) {
+                 // schecking if the image got sent in the console
+                 console.log('SENT');
+                 // predicted number being sent to the console
+                 console.log(data);
+                 $("#predictedNumber").empty().append(data);
+             });
+         };
+      </script>
+   </body>
+</html>	

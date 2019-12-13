@@ -1,0 +1,43 @@
+body {
+    text-align: center;
+    background-color: aquamarine;
+}
+
+#top text{
+    text-align: center;
+    color: darkblue;
+}
+
+#draw {
+    display: inline;
+}
+
+.h2{
+    color: darkblue;
+}
+
+#buttons {
+    border-width: thick;
+    border-bottom-width: thick;
+    font: icon;
+}
+
+#predict{
+    color: black;
+    font-size: larger;
+    background: gold;
+    border-width: thick;
+    border-bottom-width: thick;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+#clear{
+    color: black;
+    font-size: larger;
+    background: coral;
+    border-width: thick;
+    border-bottom-width: thick;
+    font-family: sans-serif;
+    font-weight: bold;
+}

@@ -4,6 +4,7 @@ var mousePressed = false;
 var lastX, lastY;
 var ctx;
 
+//this function will start the mouse events.
 function InitThis() {
     ctx = document.getElementById('myCanvas').getContext("2d");
 
@@ -25,7 +26,7 @@ function InitThis() {
         mousePressed = false;
     });
 }
-
+//this will draw a line each time the mouse moves when pressed
 function Draw(x, y, isDown) {
     if (isDown) {
         ctx.beginPath();
@@ -39,7 +40,7 @@ function Draw(x, y, isDown) {
     }
     lastX = x; lastY = y;
 }
-
+//will clear the canvas to start drawing again.
 function clearArea() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     $('#NewpredictedNumber').text('');
